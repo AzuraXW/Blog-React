@@ -6,6 +6,7 @@ import Article from './pages/Article'
 import About from './pages/About'
 import Search from './pages/Search'
 import Footer from './widgets/Footer'
+import Articles from './pages/Articles'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/article/:id" element={<Article />} />
         <Route path="/about" element={<About />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/articles" element={<Articles />} />
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -17,7 +17,7 @@ function Index() {
         ))}
       </div>
       <Circle
-        className="absolute bottom-0  left-[20%] md:bottom-20 -z-10 animate-spin-slow"
+        className="absolute bottom-0  left-[20%] md:bottom-20 -z-10 animate-spin-slow origin-top-right"
         width="120px"
         height="120px"
       />
@@ -32,12 +32,12 @@ function Index() {
         height="180px"
       />
       <Circle
-        className="absolute left-[45%] top-[40%] -z-10 animate-spin-slow"
+        className="absolute left-[45%] top-[40%] -z-10 animate-spin-slow origin-bottom-left"
         width="180px"
         height="180px"
       />
       <Circle
-        className="absolute left-[70%] bottom-20 -z-10 animate-spin-slow"
+        className="absolute left-[70%] bottom-20 -z-10 animate-spin-slow origin-top-right"
         width="160px"
         height="160px"
       />
