@@ -12,10 +12,12 @@ function Header() {
   const pathname = location.pathname
   const [menuShow, setMenuShow] = useState(false)
 
+  // 控制菜单显示状态
   function changeMenuStatus() {
     setMenuShow(!menuShow)
   }
 
+  // 路径变化收起菜单，首次加载不生效
   let firstLoad = useRef(true)
   useEffect(() => {
     if (firstLoad.current) {
