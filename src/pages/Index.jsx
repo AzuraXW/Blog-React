@@ -2,9 +2,8 @@ import React from 'react'
 import ArticleCard from '../components/ArticleCard'
 import Circle from '../widgets/Circle'
 import { Button } from 'antd'
-import { useEffect } from 'react'
 import { fetchArticleList } from '../api'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Spin } from 'antd'
 
 function Index() {
