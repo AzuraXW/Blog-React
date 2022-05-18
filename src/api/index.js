@@ -22,8 +22,14 @@ function visitCount () {
   return http.get('/visit/count')
 }
 
+// 获取文章详情
+function articleDetail (id) {
+  return http.get(`/article/detail/${id}`)
+}
+
 export {
   fetchArticleList,
   visit,
-  visitCount
+  visitCount,
+  articleDetail
 }
