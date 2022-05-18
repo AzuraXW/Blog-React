@@ -1,11 +1,13 @@
 import { http } from './http'
 
 // 获取文章列表
-function fetchArticleList (page, limit) {
+function fetchArticleList (page, limit, sortKey, sortRule) {
   return http.get('/article/list', {
     params: {
       page,
-      limit
+      limit,
+      sort_key: sortKey,
+      sort_rule: sortRule
     }
   })
 }
