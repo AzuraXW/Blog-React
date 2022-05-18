@@ -49,7 +49,7 @@ function Articles() {
 
   return (
     <div className="md:px-20 px-4 py-2">
-      <div className="my-10 grid grid-cols-3 w-full md:w-3/5">
+      <div className="my-10 grid grid-cols-2 w-full md:w-3/5 md:grid-cols-3 gap-2 md:gap-0">
         <button
           className={`text-gray-400 flex items-center ${
             sortKey === 'create_at' ? 'text-gray-900' : ''
@@ -91,7 +91,7 @@ function Articles() {
           ))}
         </div>
       </Spin>
-      <div className="mt-20 flex justify-end">
+      <div className="mt-20 flex justify-center md:justify-end">
         <Pagination
           current={pageParams.page}
           total={articles.count}

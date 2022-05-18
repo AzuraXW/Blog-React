@@ -17,16 +17,6 @@ function Header() {
     setMenuShow(!menuShow)
   }
 
-  // 路径变化收起菜单，首次加载不生效
-  let firstLoad = useRef(true)
-  useEffect(() => {
-    if (firstLoad.current) {
-      firstLoad.current = false
-    } else {
-      changeMenuStatus()
-    }
-  }, [pathname])
-
   return (
     <header className="flex justify-between py-8 px-6 md:items-center flex-col md:flex-row items-stretch overflow-hidden">
       <div className="flex items-center justify-between">
@@ -76,25 +66,29 @@ function Header() {
           <MLink
             to="/"
             selected={pathname === '/'}
-            className="w-full md:w-auto">
+            className="w-full md:w-auto"
+            onClick={changeMenuStatus}>
             首页
           </MLink>
           <MLink
             to="/tag"
             selected={pathname === '/tag'}
-            className="w-full md:w-auto">
+            className="w-full md:w-auto"
+            onClick={changeMenuStatus}>
             标签
           </MLink>
           <MLink
             to="/articles"
             selected={pathname === '/articles'}
-            className="w-full md:w-auto">
+            className="w-full md:w-auto"
+            onClick={changeMenuStatus}>
             文章
           </MLink>
           <MLink
             to="/about"
             selected={pathname === '/about'}
-            className="w-full md:w-auto">
+            className="w-full md:w-auto"
+            onClick={changeMenuStatus}>
             关于
           </MLink>
         </nav>
