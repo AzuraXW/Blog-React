@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { articleDetail } from '../api'
+import { articleDetail, read } from '../api'
 import { format } from '../utils'
 import { Tag } from 'antd'
 import '../styles/markdown.scss'
@@ -14,6 +14,7 @@ function Article() {
   useEffect(() => {
     articleDetail(id).then((res) => {
       setArticle(res.data)
+      read(id)
     })
   }, [])
 
@@ -44,7 +45,7 @@ function Article() {
   useEffect(() => {
     // 目录距离屏幕的位置
     const position = contentRef.current.getBoundingClientRect()
-    window.addEventListener('scroll', () => {
+    function hlander() {
       // 获取滚动高度
       const scrollTop = getScrollTop()
       // 滚动高度+目录本身的高度
@@ -59,7 +60,13 @@ function Article() {
         // 防止滚动出底部
         contentRef.current.style = `position: absolute; bottom:0`
       }
-    })
+    }
+    window.addEventListener('scroll', hlander)
+
+    // 清除副作用
+    return () => {
+      window.removeEventListener('scroll', hlander)
+    }
   }, [])
 
   return (

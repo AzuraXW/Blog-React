@@ -27,9 +27,15 @@ function articleDetail (id) {
   return http.get(`/article/detail/${id}`)
 }
 
+// 添加阅读量
+function read (id) {
+  return http.post('/article/read/' + id)
+}
+
 export {
   fetchArticleList,
   visit,
   visitCount,
-  articleDetail
+  articleDetail,
+  read
 }
