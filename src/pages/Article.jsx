@@ -6,6 +6,7 @@ import { format } from '../utils'
 import { Tag } from 'antd'
 import '../styles/markdown.scss'
 import { useRef } from 'react'
+import { getScrollTop } from '../utils'
 
 function Article() {
   const { id } = useParams()
@@ -19,6 +20,7 @@ function Article() {
   const markdownRef = useRef({})
   const [titleList, setTitleList] = useState([])
   useEffect(() => {
+    // 提取文章内部标题，生成目录导航
     setTimeout(() => {
       const list = []
       Array.from(markdownRef.current.childNodes).forEach((dom, index) => {
@@ -36,9 +38,33 @@ function Article() {
       setTitleList(list)
     }, 100)
   }, [])
+
+  const contentRef = useRef(null) // 目录dom
+  const articleRef = useRef(null) // 文章区域dom
+  useEffect(() => {
+    // 目录距离屏幕的位置
+    const position = contentRef.current.getBoundingClientRect()
+    window.addEventListener('scroll', () => {
+      // 获取滚动高度
+      const scrollTop = getScrollTop()
+      // 滚动高度+目录本身的高度
+      const height = scrollTop - position.y + contentRef.current.offsetHeight
+      // 滚动高度大于目录的原始定位，设置绝对定位
+      if (scrollTop >= position.top) {
+        contentRef.current.style = `position: fixed; top:0;`
+      } else {
+        contentRef.current.style = ''
+      }
+      if (height >= articleRef.current.offsetHeight) {
+        // 防止滚动出底部
+        contentRef.current.style = `position: absolute; bottom:0`
+      }
+    })
+  }, [])
+
   return (
-    <div className="w-full md:w-4/5 mx-auto px-10 flex">
-      <div className="flex-1">
+    <div className="w-full md:w-4/5 mx-auto px-10 flex relative">
+      <div className="flex-1" ref={articleRef}>
         <h1 className="text-4xl text-center mt-0 mb-10">{article.title}</h1>
         <div className="text-base text-gray-400 grid grid-cols-1 gap-y-2">
           <div>
@@ -61,24 +87,24 @@ function Article() {
             ref={markdownRef}></div>
         </div>
       </div>
-      <div
-        className="w-[210px] ml-10"
-        style={{ position: 'sticky', top: '20px' }}>
-        <p className="my-5 text-lg border-b py-4">目录</p>
-        <ul className=" text-base">
-          {titleList.map((title) => (
-            <li
-              style={{ marginLeft: (title.level - 2) * 15 + 'px' }}
-              key={title.id}>
-              <a
-                href={'#' + title.id}
-                className="block px-3 py-2 rounded hover:bg-gray-100">
-                {title.name}
-              </a>
-            </li>
-          ))}
-          <li className="ml-2">END</li>
-        </ul>
+      <div className="w-[210px] ml-10">
+        <div ref={contentRef} className="w-[210px]">
+          <p className="my-5 text-lg border-b py-4">目录</p>
+          <ul className="text-base">
+            {titleList.map((title) => (
+              <li
+                style={{ marginLeft: (title.level - 2) * 15 + 'px' }}
+                key={title.id}>
+                <a
+                  href={'#' + title.id}
+                  className="block px-3 py-2 rounded hover:bg-gray-100">
+                  {title.name}
+                </a>
+              </li>
+            ))}
+            <li className="ml-2">END</li>
+          </ul>
+        </div>
       </div>
     </div>
   )
