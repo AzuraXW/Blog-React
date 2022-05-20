@@ -6,7 +6,7 @@ import { format } from '../utils'
 import { Tag } from 'antd'
 import '../styles/markdown.scss'
 import { useRef } from 'react'
-import { getScrollTop } from '../utils'
+import { getScrollTop, isMobile } from '../utils'
 
 function Article() {
   const { id } = useParams()
@@ -21,6 +21,7 @@ function Article() {
   const markdownRef = useRef({})
   const [titleList, setTitleList] = useState([])
   useEffect(() => {
+    if (isMobile()) return
     // 提取文章内部标题，生成目录导航
     setTimeout(() => {
       const list = []
@@ -43,6 +44,7 @@ function Article() {
   const contentRef = useRef(null) // 目录dom
   const articleRef = useRef(null) // 文章区域dom
   useEffect(() => {
+    if (isMobile()) return
     // 目录距离屏幕的位置
     const position = contentRef.current.getBoundingClientRect()
     function hlander() {
@@ -70,7 +72,7 @@ function Article() {
   }, [])
 
   return (
-    <div className="w-full md:w-4/5 mx-auto px-10 flex relative">
+    <div className="w-full md:w-4/5 mx-auto px-10 md:flex relative">
       <div className="flex-1" ref={articleRef}>
         <h1 className="text-4xl text-center mt-0 mb-10">{article.title}</h1>
         <div className="text-base text-gray-400 grid grid-cols-1 gap-y-2">
@@ -94,7 +96,7 @@ function Article() {
             ref={markdownRef}></div>
         </div>
       </div>
-      <div className="w-[210px] ml-10">
+      <div className="w-[210px] ml-10 hidden md:block">
         <div ref={contentRef} className="w-[210px]">
           <p className="my-5 text-lg border-b py-4">目录</p>
           <ul className="text-base">
