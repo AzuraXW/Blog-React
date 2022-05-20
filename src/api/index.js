@@ -32,10 +32,20 @@ function read (id) {
   return http.post('/article/read/' + id)
 }
 
+// 搜索文章
+function search (keyword) {
+  return http.get('/article/search', {
+    params: {
+      keyword
+    }
+  })
+}
+
 export {
   fetchArticleList,
   visit,
   visitCount,
   articleDetail,
-  read
+  read,
+  search
 }

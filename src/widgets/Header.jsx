@@ -2,19 +2,33 @@ import React, { useRef } from 'react'
 import Logo from '../assets/logo.png'
 import MLink from '../components/Link'
 import IconFont from '../components/IconFont'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Input } from 'antd'
+
+const { Search } = Input
 
 function Header() {
   const navigate = useNavigate()
   const location = useLocation()
   const pathname = location.pathname
+  const [params] = useSearchParams()
   const [menuShow, setMenuShow] = useState(false)
+  const [searchKeyword, setSearchKeyword] = useState('')
+
+  useEffect(() => {
+    setSearchKeyword(params.get('keyword'))
+  }, [])
 
   // 控制菜单显示状态
   function changeMenuStatus() {
     setMenuShow(!menuShow)
+  }
+
+  // 跳转搜索结果页面
+  function onSearch(value, event) {
+    setSearchKeyword(value)
+    navigate(`/search?keyword=${value}`)
   }
 
   return (
@@ -33,16 +47,15 @@ function Header() {
         </div>
 
         <div className="ml-6 hidden md:block">
-          <div
-            className="px-4 py-2 border-2 border-blue-400 rounded outline-none w-[250px]
-          cursor-pointer shadow-md shadow-zinc-100 flex justify-between items-center"
-            onClick={() => navigate('/search')}>
-            <span className="text-gray-500">搜索</span>
-            <IconFont
-              type="icon-sousuo"
-              style={{ fontSize: '20px', color: '#1890ff' }}
-            />
-          </div>
+          <Search
+            placeholder="输入关键字搜索"
+            allowClear
+            value={searchKeyword}
+            enterButton="搜索"
+            size="large"
+            onChange={(e) => setSearchKeyword(e.value)}
+            onSearch={onSearch}
+          />
         </div>
       </div>
       <div
